@@ -6,6 +6,11 @@ import moment from 'moment'
 
 const doc = new GoogleSpreadsheet(process.env.SHEET_ID)
 
+const fromBase64 = value => {
+  const buff = Buffer.from(value, 'base64')
+  return buff.toString('ascii')
+}
+
 const gerarCupom = () => {
   const code = parseInt(moment().format('YYMMDDHHmmssSSS')).toString(16).toUpperCase() //Gera cupom baseado na hora e converte para hexadecimal
   return code.substr(0, 4) + '-' + code.substr(4, 4) + '-' + code.substr(8, 4) //Formata uma máscara para o cupom
@@ -15,7 +20,7 @@ export default async (req, res) => {
   try {
     await doc.useServiceAccountAuth({
       client_email: process.env.SHEET_CLIENTE_EMAIL,
-      private_key: process.env.SHEET_PRIVATE_KEY
+      private_key: fromBase64(process.env.SHEET_PRIVATE_KEY)
     })
     await doc.loadInfo()
 
