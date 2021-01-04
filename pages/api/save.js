@@ -1,7 +1,6 @@
 //Api que salva dados na planilha
 
 import { GoogleSpreadsheet } from 'google-spreadsheet'
-import credentials from '../../credentials.json'
 import moment from 'moment'
 
 const doc = new GoogleSpreadsheet(process.env.SHEET_ID)
