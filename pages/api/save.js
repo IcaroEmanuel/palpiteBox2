@@ -2,13 +2,9 @@
 
 import { GoogleSpreadsheet } from 'google-spreadsheet'
 import moment from 'moment'
+import { fromBase64 } from '../../utils/base64'
 
 const doc = new GoogleSpreadsheet(process.env.SHEET_ID)
-
-const fromBase64 = value => {
-  const buff = Buffer.from(value, 'base64')
-  return buff.toString('ascii')
-}
 
 const gerarCupom = () => {
   const code = parseInt(moment().format('YYMMDDHHmmssSSS')).toString(16).toUpperCase() //Gera cupom baseado na hora e converte para hexadecimal
